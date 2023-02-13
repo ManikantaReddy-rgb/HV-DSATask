@@ -1,19 +1,24 @@
-def highest_frequency(arr):
+def max_frequency(arr, start, end, max_element, max_count):
+  if start == end:
+    return max_element
   
-    frequency_dict = {}
-    
-    for num in arr:
-        
-        if num not in frequency_dict:
-            frequency_dict[num] = 1
-        
-        else:
-            frequency_dict[num] += 1
-   
-    max_frequency = max(frequency_dict.values())
-    for key, value in frequency_dict.items():
-        if value == max_frequency:
-            return key
+  current_element = arr[start]
+  current_count = 1
+  
+  for i in range(start + 1, end):
+    if arr[i] == current_element:
+      current_count += 1
+  
+  if current_count > max_count:
+    max_count = current_count
+    max_element = current_element
+  
+  return max_frequency(arr, start + 1, end, max_element, max_count)
 
-arr = [1, 2, 4, 3, 2, 4, 2, 5, 7, 2]
-print(highest_frequency(arr)) 
+def main():
+  arr = [1,2,4,3,2,4,2,5,7,2]
+  result = max_frequency(arr, 0, len(arr), arr[0], 0)
+  print("Element with highest frequency: ", result)
+
+if __name__ == "__main__":
+  main()
